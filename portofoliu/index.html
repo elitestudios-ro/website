@@ -186,6 +186,15 @@ pointer-events: none;
   /* ancore (#sectiune) derulează lin nativ */
   html { scroll-behavior: smooth; }
 </style>
+
+<style id="compiler-scroll-fix">
+  html, body { height: auto !important; overflow-y: auto !important; margin:0; padding:0; }
+  [data-framer-root] { min-height: auto !important; display:block !important; overflow: visible !important; }
+</style>
+
+<style id="compiler-smooth-scroll">
+  html { scroll-behavior: smooth; }
+</style>
 </head>
 <body>
     <script async="" src="https://events.framer.com/script?v=2" data-fid="e6742c379e29240996751911e1779ec96aa0d3206db9bdc0edc270db4154e86a" data-no-nt=""></script>
@@ -270,5 +279,18 @@ pointer-events: none;
     if (targetY > maxY) targetY = maxY;
   }, { passive: true });
 })();
+</script>
+
+<script id="compiler-force-home-reload">
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('a[href="/"]').forEach(function(a){
+    a.setAttribute('rel','external');
+    a.setAttribute('data-router-disabled','true');
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      window.location.href = '/'; // full reload
+    }, {capture:true});
+  });
+});
 </script>
 </body><div id="tella-plugin"></div></html>
