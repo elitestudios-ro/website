@@ -166,6 +166,26 @@ pointer-events: none;
 <style id="compiler-smooth-scroll">
   html { scroll-behavior: smooth; }
 </style>
+
+<style id="compiler-scroll-fix">
+  /* scroll normal doar pe document */
+  html, body {
+    height: auto !important;
+    overflow-y: auto !important;
+    margin: 0; padding: 0;
+  }
+  /* oprește scroll-ul intern al wrapperului Framer ca să nu mai apară a doua bară */
+  [data-framer-root] {
+    min-height: auto !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+</style>
+
+<style id="compiler-smooth-scroll">
+  /* ancore (#sectiune) derulează lin nativ */
+  html { scroll-behavior: smooth; }
+</style>
 </head>
 <body>
     <script async="" src="https://events.framer.com/script?v=2" data-fid="e6742c379e29240996751911e1779ec96aa0d3206db9bdc0edc270db4154e86a" data-no-nt=""></script>
@@ -206,6 +226,40 @@ pointer-events: none;
   };
   window.addEventListener('wheel', onWheel, { passive: false });
 
+  let startY = 0;
+  window.addEventListener('touchstart', e => startY = e.touches[0].clientY, { passive: true });
+  window.addEventListener('touchmove', e => {
+    const dy = startY - e.touches[0].clientY;
+    targetY += dy; startY = e.touches[0].clientY;
+    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+    if (targetY < 0) targetY = 0;
+    if (targetY > maxY) targetY = maxY;
+  }, { passive: true });
+})();
+</script>
+
+<script id="compiler-eased-wheel">
+(() => {
+  let targetY = window.scrollY, currentY = window.scrollY;
+  const ease = 0.12; // mai mic = mai "moale"
+  const step = () => {
+    currentY += (targetY - currentY) * ease;
+    window.scrollTo(0, currentY);
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+
+  // Wheel (desktop)
+  const onWheel = (e) => {
+    e.preventDefault();
+    targetY += e.deltaY;
+    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+    if (targetY < 0) targetY = 0;
+    if (targetY > maxY) targetY = maxY;
+  };
+  window.addEventListener('wheel', onWheel, { passive: false });
+
+  // Touch (mobile)
   let startY = 0;
   window.addEventListener('touchstart', e => startY = e.touches[0].clientY, { passive: true });
   window.addEventListener('touchmove', e => {
