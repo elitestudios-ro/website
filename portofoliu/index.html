@@ -191,5 +191,39 @@ pointer-events: none;
     
     <!-- End of bodyEnd -->
 
+<script>
+(() => {
+  let targetY = window.scrollY, currentY = window.scrollY;
+  const ease = 0.12;      // lower = softer
+  const step = () => {
+    currentY += (targetY - currentY) * ease;
+    window.scrollTo(0, currentY);
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+
+  // capture wheel & touch and ease them
+  const onWheel = (e) => {
+    e.preventDefault();
+    targetY += e.deltaY;
+    // clamp
+    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+    if (targetY < 0) targetY = 0;
+    if (targetY > maxY) targetY = maxY;
+  };
+  window.addEventListener('wheel', onWheel, { passive: false });
+
+  // touch support
+  let startY = 0;
+  window.addEventListener('touchstart', e => startY = e.touches[0].clientY, { passive: true });
+  window.addEventListener('touchmove', e => {
+    const dy = startY - e.touches[0].clientY;
+    targetY += dy; startY = e.touches[0].clientY;
+    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+    if (targetY < 0) targetY = 0;
+    if (targetY > maxY) targetY = maxY;
+  }, { passive: true });
+})();
+</script>
 
 </body><div id="tella-plugin"></div></html>
