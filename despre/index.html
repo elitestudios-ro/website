@@ -166,6 +166,15 @@ pointer-events: none;
 <style id="compiler-smooth-scroll">
   html { scroll-behavior: smooth; }
 </style>
+
+<style id="compiler-scroll-fix">
+  html, body { height: auto !important; overflow-y: auto !important; margin:0; padding:0; }
+  [data-framer-root] { min-height: auto !important; display:block !important; overflow: visible !important; }
+</style>
+
+<style id="compiler-smooth-scroll">
+  html { scroll-behavior: smooth; }
+</style>
 </head>
 <body>
     <script async="" src="https://events.framer.com/script?v=2" data-fid="e6742c379e29240996751911e1779ec96aa0d3206db9bdc0edc270db4154e86a" data-no-nt=""></script>
@@ -188,6 +197,19 @@ pointer-events: none;
 
 
 <div id="__framer-editorbar-container"><span aria-label="Edit Framer Content" id="__framer-editorbar-label">Edit Content</span><button type="button" aria-labelledby="__framer-editorbar-label" id="__framer-editorbar-button"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"><path d="M8.75 2.25a1.77 1.77 0 0 1 2.5 0h0c.69.69.69 1.81 0 2.5l-7 7h-2.5v-2.5Z" fill="transparent" stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 11.75h3.75" fill="transparent" stroke-width="1.5" stroke="currentColor" stroke-linecap="round"></path></svg></button></div><iframe id="__framer-editorbar" src="https://framer.com/edit?framerSiteId=e6742c379e29240996751911e1779ec96aa0d3206db9bdc0edc270db4154e86a&amp;source=chilly-course-735490.framer.app&amp;features=%7B%22editorBarDisableFrameAncestorsSecurity%22%3Afalse%7D&amp;loadStart=1756560538050&amp;forceShow=true" aria-hidden="true" allow="autoplay" tabindex="-1" class="status_visually_hidden"></iframe>
+<script id="compiler-force-home-reload">
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('a[href="/"]').forEach(function(a){
+    a.setAttribute('rel','external');
+    a.setAttribute('data-router-disabled','true');
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      window.location.href = '/'; // full reload
+    }, {capture:true});
+  });
+});
+</script>
+
 <script id="compiler-force-home-reload">
 document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('a[href="/"]').forEach(function(a){
